@@ -1,5 +1,7 @@
 package com.example.coffeepj.Controller;
 
+
+
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.coffeepj.Dao.CoffeeRepository;
 import com.example.coffeepj.VO.Coffee;
+
+
 
 @RestController
 public class CoffeeController {
@@ -34,7 +38,7 @@ public class CoffeeController {
         coffeeDao.save(coffee);
         return coffee;
     }
- 
+
     @GetMapping("/coffee/getlist") //등록된 음료 조회
     public List<Coffee> getCoffeeList() {
     	List<Coffee> coffeeList=(List<Coffee>)coffeeDao.findAll();
@@ -46,18 +50,18 @@ public class CoffeeController {
     	coffeeDao.delete(coffeeDao.findByName(name));
     	return "redirect:/main";
     }
-    
+
     @GetMapping("/coffee/edit/{name}") //음료 상세정보 수정     //수정필요
     public Coffee editCoffee(Coffee editcoffee){
     	Coffee coffee=coffeeDao.save(editcoffee);
     	return coffee;
     }
-    
-    
+
     @GetMapping("/main") //메인페이지
   	public String jspPage(Model model){
   		model.addAttribute("name","hello springBoot1234"); //value객체를 name이름으로 추가
   		return "hello";  //views폴더의 hello.jsp
   	}
 
+	
 }

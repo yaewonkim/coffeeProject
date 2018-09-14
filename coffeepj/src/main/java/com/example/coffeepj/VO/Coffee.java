@@ -6,29 +6,61 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="coffee")
+
 public class Coffee {
     @Id
-    String name;
+	String name;
     int price;
-
-    public Coffee() {
-    }
-
+//    int id;
+//    int stock;
+//    int sellednum;
+//    regDate, updateDate√ﬂ∞°
+   
+    public Coffee() {}
+    
     public Coffee(String name, int price) {
         this.name = name;
         this.price = price;
     }
+    
+//    public int getId() {
+//		return id;
+//	}
+//
+//	public void setId(int id) {
+//		this.id = id;
+//	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setPrice(int price) {
-        this.price = price;
-    }
-    public int getPrice() {
-        return price;
-    }
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+//	public int getStock() {
+//		return stock;
+//	}
+//
+//	public void setStock(int stock) {
+//		this.stock = stock;
+//	}
+//
+//	public int getSellednum() {
+//		return sellednum;
+//	}
+//
+//	public void setSellednum(int sellednum) {
+//		this.sellednum = sellednum;
+//	}
+
 }
