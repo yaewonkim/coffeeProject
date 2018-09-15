@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>수정하기</title>
+</head>
+<body>
+	<h1>수정 하기</h1>
+
+		<label>이름</label>  <input type="text" name="name" id="name"/><br>
+		<label>가격</label>  <input type="text" name="price" id="price"/><br><br>
+		
+		<input type="button" name="postmodData" id="postmodData" value="확인" onclick="postmodData();"/>
+		<button type="button" onclick="location.href='../../list'">취소</button>
+		
+ 
+	
+	<script>
+	
+   var original_id = "";
+   window.onload = function (){  //해당 객체 받아와 input값 채우기
+       $.ajax({
+           url: window.location.pathname+"/getdata",
+           type: "GET",
+           dataType:'json',
+           success: function (data) {	
+        	   document.getElementById("name").value =data.name;
+        	   document.getElementById("price").value =data.price;
+        	   original_id = data.name; 
+           }, error: function (jqXHR, textStatus, errorThrown) {
+           }
+      });
+   }
+   
+	  function postmodData() { //수정된 커피 추가하기.
+      
+      var modelObj = {
+            name: $("#name").val(),
+            price: $("#price").val(),
+            id : original_id
+      };
+      
+      console.log("post data:"+modelObj);      
+      console.log("원본 id: "+original_id);
+      
+       $.ajax({
+               type: "POST",
+               url: "/detail/mod/confirm",  //수정하기 만들기
+               headers: {
+                   "Content-Type": "application/json"
+               },
+               data: JSON.stringify(modelObj),
+               success: function (data) {
+                  console.log("POST API RESPONSE::"+data.name);
+                  console.log("POST API RESPONSE::"+data.price);
+               },
+               error: function (jqXHR, textStatus, errorThrown) {
+               },
+               complete : function() { 
+            	   alert("해당 음료를 수정하였습니다.");
+               	   location.href= "../../list";
+               }
+           });
+   }
+	</script>
+
+</body>
+</html>
+
+

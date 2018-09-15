@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>상세보기</title>
+</head>
+<body>
+	<h1>상세 보기</h1>
+
+		<label>이름</label>  <input type="text" name="name" id="name" readonly/><br>
+		<label>가격</label>  <input type="text" name="price" id="price"readonly/><br><br>
+		<button type="button" onclick="gotoModifyPage();">수정</button>
+		<button type="button" onclick="delCoffee();">삭제</button>
+		<button type="button" onclick="location.href='../list'">되돌아가기</button>
+	
+	<script>
+  
+   var mod_name="";
+	
+   var values = [];
+   window.onload = function (){
+	   
+       $.ajax({
+           url: window.location.pathname+"/getdata",
+           type: "GET",
+           dataType:'json',
+           success: function (data) {	
+        	   document.getElementById("name").value =data.name;
+        	   mod_name=data.name;
+        	   document.getElementById("price").value =data.price;
+           }, error: function (jqXHR, textStatus, errorThrown) {
+           }
+      });
+   }
+   
+   
+   function gotoModifyPage(){ 
+   	   console.log("mod_id:"+mod_name);
+	   location.href= "./mod/"+mod_name;
+   }
+   
+   function delCoffee() {   
+	   console.log("url:"+window.location.pathname+"/delCoffee");
+       $.ajax({
+    	   url: window.location.pathname+"/delCoffee",
+           type: "POST",
+           dataType:'json',
+           success: function () {	
+        	  
+           }, error: function (jqXHR, textStatus, errorThrown) {
+           },
+           complete : function() { 
+        	   alert("해당 음료를 삭제하였습니다.");
+           	   location.href= "../list";
+           }
+      });
+   }
+   
+   </script>
+</body>
+</html>
+
+
