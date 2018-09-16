@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,54 +27,55 @@ public class CoffeeController {
 		return coffeeList;
 	}
 
-	@RequestMapping(value = "/postdata", method = RequestMethod.POST)
-	public ResponseEntity<Object> postData(@RequestBody Coffee demo) {
-		System.out.println("coffee name" + demo.getName());
-		System.out.println("coffee price" + demo.getPrice());
-		return new ResponseEntity<Object>("Success", HttpStatus.OK);
-	}
 
 	@PostMapping("/add")     // 새로운 음료등록
 	public Coffee insertCoffee(@RequestBody Map<String, String> params) {
 		String name = params.get("name");
 		String price = params.get("price");
-		Coffee coffee = new Coffee(name, Integer.valueOf(price));
+		String stock = params.get("stock");
+		Coffee coffee = new Coffee(name, Integer.valueOf(price), Integer.valueOf(stock));
 		coffeeDao.save(coffee);
 		return coffee;
 	}
 
-	@GetMapping("/detail/{name}/getdata")    // detail화면 coffee상세정보
-	public Coffee getCoffeeDetail(@PathVariable String name) {
-		Coffee coffee = coffeeDao.findByName(name);
+	@GetMapping("/detail/{id}/getdata")    // detail화면 상세정보조회
+	public Coffee getCoffeeDetail(@PathVariable String id) {
+		Coffee coffee = coffeeDao.findById(Integer.valueOf(id));
 		return coffee;
 	}
 
-	@GetMapping("/detail/mod/{name}/getdata")    // 수정화면 정보띄우기
-	public Coffee getCoffeeDetail2(@PathVariable String name) {
-		Coffee coffee = coffeeDao.findByName(name);
-		return coffee;
-	}
-	
-	@PostMapping("/detail/{name}/delCoffee")   // 음료 삭제
-	public void delCoffee(@PathVariable String name) {
-		coffeeDao.delete(coffeeDao.findByName(name));
+	@PostMapping("/detail/{id}/delCoffee")   // 음료 삭제
+	public void delCoffee(@PathVariable String id) {
+		coffeeDao.delete(coffeeDao.findById(Integer.valueOf(id)));
 		return;
 	}
+	
+	@GetMapping("/detail/mod/{id}/getdata")    // 수정화면 정보띄우기
+	public Coffee getCoffeeDetail2(@PathVariable String id) {
+		Coffee coffee = coffeeDao.findById(Integer.valueOf(id));
+		return coffee;
+	}
 
-	@PostMapping("/detail/mod/confirm")    // 음료 상세정보 수정 //save에서 에러남.......!
+	@PostMapping("/detail/mod/confirm")  
 	public Coffee editDataConfirm(@RequestBody Map<String, String> params) {
 		String name = params.get("name");
 		String price = params.get("price");
+		String stock = params.get("stock");
 		String id = params.get("id");
-		Coffee coffee = coffeeDao.findByName(id);
+		Coffee coffee = coffeeDao.findById(Integer.valueOf(id));
+		
 		if(name==null || name.trim().length()==0) { 
-			System.out.println("name null");
+			System.out.println("name is null");
 		 } 
 		if(price==null || price.trim().length()==0) { 
-			System.out.println("price null");
+			System.out.println("price is null");
+		 }
+		if(stock==null || stock.trim().length()==0) { 
+			System.out.println("stock is null");
 		 }
 		coffee.setName(name);
 		coffee.setPrice(Integer.valueOf(price));
+		coffee.setStock(Integer.valueOf(stock));
 		coffeeDao.save(coffee);  
 		return coffee;
 	}

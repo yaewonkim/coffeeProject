@@ -1,18 +1,12 @@
 package com.example.coffeepj.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.coffeepj.Dao.CoffeeRepository;
-
 @Controller
 public class PortalController {  //페이지로 연결
-	
-	  @Autowired  
-	    CoffeeRepository coffeeDao;
-	  
+		  
 		@RequestMapping("/list")
 		public String listPage(Model model){
 			return "list";
