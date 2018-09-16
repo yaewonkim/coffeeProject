@@ -44,9 +44,9 @@
       };
 	  
       if (confirm("해당 정보가 맞습니까?"+
-    		  "\n\r이름:"+$("#name").val()+
-    		  "\n\r가격:"+$("#price").val()+
-    		  "\n\r재고:"+$("#stock").val())) {  
+    		  "\n\r이름: "+$("#name").val()+
+    		  "\n\r가격: "+$("#price").val()+
+    		  "\n\r재고: "+$("#stock").val())) {  
 		   
       console.log("post data:"+modelObj);      
       console.log("수정하는 coffee_id: "+modifying_id);

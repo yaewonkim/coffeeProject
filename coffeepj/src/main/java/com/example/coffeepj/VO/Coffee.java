@@ -1,5 +1,6 @@
 package com.example.coffeepj.VO;
 
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -17,7 +18,7 @@ public class Coffee {
     String editdate;
     int salesnum;
    
- 
+    
 	public Coffee() {}
     
     public Coffee(String name, int price, int stock) {  

@@ -7,7 +7,7 @@
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<h1>커피 등록 화면</h1>
 
-		<label>이름</label>  <input type="text" name="name" id="name"/><br>
+		<label>이름</label>  <input type="text" name="name" id="name"/><br><br>
 		<label>가격</label>  <input type="text" name="price" id="price"/><br><br>
 		<label>재고</label>  <input type="text" name="stock" id="stock"/><br><br>
 		<input type="button" name="addCoffee" id="addCoffee" value="저장" onclick="addCoffee();"/>
