@@ -17,6 +17,7 @@
        $.ajax({
            url: "/getdata",
            type: "GET",
+           async: false,
            dataType:'json',
            success: function (data) {	
           	 txt += "<table border='1'>"
@@ -29,7 +30,7 @@
               $.each(data, function( index, value ) {
             	 txt+="<tr><td>"+value.name + "</td>";
             	 txt+="<td>"+value.regdate + "</td>";
-            	 txt+="<td>"+"리스트채워라" + "</td>";
+            	 txt+="<td>"+  getShopData(value.id) + "</td>";
             	 txt+="<td><a href=\"./detail/"+value.id+"\">조회</a></td></tr>";
               });
               txt += "</table>" ;      
@@ -40,6 +41,33 @@
            }
       });
    }
+
+   function getShopData(coffee_id){
+	   var shop_list="";
+	   var id = coffee_id;
+	    $.ajax({
+	           url: "http://9.194.96.14:8090/getShopList/"+id, 
+	           type: "GET",
+	           crossOrigin: true,
+	           dataType:"json",
+	           success: function (data) {	
+	        	   console.log("id가"+id+"일 때"); 
+	        	   $.each(data, function( index, value ) {
+	        		    console.log("each문"+index+": "+value.testShop.name);
+	        		    shop_list+=value.testShop.name+", ";
+	        	   });
+	           }, error: function (request,status,error) {
+	        	   console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	           },
+	           complete : function() {
+	        	   console.log("getShopData끝:"+shop_list);
+	        	   return shop_list;
+	           }
+	      });   
+	  
+   }
+   
+   
    </script>
 </body>
 </html>

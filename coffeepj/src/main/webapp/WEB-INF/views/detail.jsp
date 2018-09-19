@@ -19,6 +19,8 @@
 		<button type="button" onclick="gotoModifyPage();">수정</button>
 		<button type="button" onclick="deleteCheck();">삭제</button>
 		<button type="button" onclick="location.href='../list'">되돌아가기</button>
+		
+		<p id="shop_detail"></p>
 	
 	<script>
 	
@@ -39,6 +41,9 @@
         	   document.getElementById("tot_sales").value = (data.salesnum)*(data.price);
         	   document.getElementById("regdate").value = data.regdate;
         	   document.getElementById("editdate").value = data.editdate;
+        	   
+        	   //함수로 받아오기 고고고
+        	   getShopDetail(data.id);
         	   document.getElementById("shop").value = "채워라";
            }, error: function (jqXHR, textStatus, errorThrown) {
            }
@@ -104,6 +109,31 @@
 	           });
   }
    
+  
+  function getShopDetail(coffee_id){     //Coffee를 판매하는 Shop 상세 정보
+	  var txt="";
+	    $.ajax({
+	    	   url: "http://9.194.96.14:8090/getShopList/"+id, 
+	           type: "GET",
+	           crossOrigin: true,
+	           dataType:"json",
+	           success: function (data) {	
+	        	   $.each(data, function( index, value ) {
+	        		 txt+="<b>매장명: "+ value.testShop.name + "</b><br>";
+	              	 txt+="등록일: " + value.testShop.regdate + "<br>";
+	              	 txt+="총 판매량: " + value.testShop.tot_num + "<br>";
+	              	 txt+="총 판매액: " + value.testShop.tot_sum + "<br>";
+	              	 txt+="수정일: " + value.testShop.updatedate +"<br>";
+	                });
+	        	   });
+	           }, error: function (request,status,error) {
+	        	   console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	           },
+	           complete : function() {
+	        	   document.getElementById("shop_detail").innerHTML = txt; 
+	           }
+	      });   
+  }
    </script>
 </body>
 </html>

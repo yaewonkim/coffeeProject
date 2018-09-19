@@ -32,5 +32,11 @@ public class PortalController {  //페이지로 연결
 			return "mod";
 		}
 			
+		@RequestMapping("/test")   
+		public String testPage(Model model){
+			return "test";
+		}
+			
+		
 		}
 		
