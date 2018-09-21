@@ -1,15 +1,20 @@
 package com.example.coffeepj.VO;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="coffee")
-
+@Table(name="Coffee")
 public class Coffee {
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     int id;
 	String name;
     int price;
@@ -25,6 +30,9 @@ public class Coffee {
     	this.name = name;
         this.price = price;
         this.stock = stock;
+        this.regdate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        this.editdate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        this.salesnum = 0;
     }
 
     

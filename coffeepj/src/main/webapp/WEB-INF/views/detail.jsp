@@ -14,12 +14,12 @@
 		<label>총 판매액</label>  <input type="text" name="tot_sales" id="tot_sales"readonly/><br><br>
 		<label>등록일</label>  <input type="text" name="regdate" id="regdate"readonly/><br><br>
 		<label>수정일</label>  <input type="text" name="editdate" id="editdate"readonly/><br><br>
-		<label>shop리스트</label>  <input type="text" name="shop" id="shop"readonly/><br><br>
 		
 		<button type="button" onclick="gotoModifyPage();">수정</button>
 		<button type="button" onclick="deleteCheck();">삭제</button>
 		<button type="button" onclick="location.href='../list'">되돌아가기</button>
-		
+		<br><br>
+		<label><b><매장 리스트></b></label>
 		<p id="shop_detail"></p>
 	
 	<script>
@@ -44,7 +44,6 @@
         	   
         	   //함수로 받아오기 고고고
         	   getShopDetail(data.id);
-        	   document.getElementById("shop").value = "채워라";
            }, error: function (jqXHR, textStatus, errorThrown) {
            }
       });
@@ -69,6 +68,7 @@
    
    function delCoffee() {
 	   addGarbage();
+	   notifyShopMenuDeleted();
 	   console.log("url:"+window.location.pathname+"/delCoffee");
        $.ajax({
     	   url: window.location.pathname+"/delCoffee",
@@ -109,23 +109,36 @@
 	           });
   }
    
+  function notifyShopMenuDeleted(){
+
+	       $.ajax({
+	    	  	    url: "http://9.194.96.14:8090" + window.location.pathname + "/delCoffee",
+	           	    type: "POST",
+	           		dataType:'json',
+	               success: function () {
+	                  console.log("Cors성공");
+	               },
+	               error: function (jqXHR, textStatus, errorThrown) {
+	               }
+	           });
+  }
+  
   
   function getShopDetail(coffee_id){     //Coffee를 판매하는 Shop 상세 정보
 	  var txt="";
 	    $.ajax({
-	    	   url: "http://9.194.96.14:8090/getShopList/"+id, 
+	    	   url: "http://9.194.96.14:8090/getShopList/"+coffee_id, 
 	           type: "GET",
 	           crossOrigin: true,
 	           dataType:"json",
 	           success: function (data) {	
 	        	   $.each(data, function( index, value ) {
-	        		 txt+="<b>매장명: "+ value.testShop.name + "</b><br>";
-	              	 txt+="등록일: " + value.testShop.regdate + "<br>";
-	              	 txt+="총 판매량: " + value.testShop.tot_num + "<br>";
-	              	 txt+="총 판매액: " + value.testShop.tot_sum + "<br>";
-	              	 txt+="수정일: " + value.testShop.updatedate +"<br>";
+	        		 txt+="<b>매장명: "+ value.name + "</b><br>";
+	              	 txt+="등록일: " + value.regdate + "<br>";
+	              	 txt+="총 판매량: " + value.tot_sales_num + "<br>";
+	              	 txt+="총 판매액: " + value.tot_sales + "<br>";
+	              	 txt+="수정일: " + value.editdate +"<br><br>";
 	                });
-	        	   });
 	           }, error: function (request,status,error) {
 	        	   console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	           },

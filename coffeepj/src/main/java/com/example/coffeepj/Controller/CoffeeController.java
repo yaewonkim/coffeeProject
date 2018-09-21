@@ -1,7 +1,7 @@
 package com.example.coffeepj.Controller;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -79,7 +79,7 @@ public class CoffeeController {
 		 }
 
 
-		coffee.setEditdate(Timestamp.valueOf(LocalDateTime.now()).toString()); 
+		coffee.setEditdate(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 		coffee.setName(name);
 		coffee.setPrice(Integer.valueOf(price));
 		coffee.setStock(Integer.valueOf(stock));

@@ -1,14 +1,16 @@
 package com.example.coffeepj.VO;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="garbage")
-
+@Table(name="Garbage")
 public class Garbage {
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	int id;
 	String name;
 	int tot_sales_num;
