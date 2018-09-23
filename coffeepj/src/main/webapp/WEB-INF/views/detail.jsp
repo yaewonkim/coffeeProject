@@ -42,19 +42,19 @@
         	   document.getElementById("regdate").value = data.regdate;
         	   document.getElementById("editdate").value = data.editdate;
         	   
-        	   //함수로 받아오기 고고고
         	   getShopDetail(data.id);
            }, error: function (jqXHR, textStatus, errorThrown) {
            }
       });
    }
    
-   
+   //수정 클릭시 페이지 이동
    function gotoModifyPage(){ 
    	   console.log("mod_id:"+modify_id);
 	   location.href= "./mod/"+modify_id;
    }
    
+
    function deleteCheck(){ 
 	   if (confirm("정말 삭제 하시겠습니까?")){ 
 	  	 delCoffee();
@@ -108,7 +108,8 @@
 	               }
 	           });
   }
-   
+  
+  //Shop Server에게 해당 Menu가 삭제되었음을 알림
   function notifyShopMenuDeleted(){
 
 	       $.ajax({
@@ -116,14 +117,14 @@
 	           	    type: "POST",
 	           		dataType:'json',
 	               success: function () {
-	                  console.log("Cors성공");
+	                  console.log("CORS_Shop에게 menu삭제 요청 성공");
 	               },
 	               error: function (jqXHR, textStatus, errorThrown) {
 	               }
 	           });
   }
   
-  
+  //Shop Server에게 해당 Menu파는 Shop상세정보 요청
   function getShopDetail(coffee_id){     //Coffee를 판매하는 Shop 상세 정보
 	  var txt="";
 	    $.ajax({

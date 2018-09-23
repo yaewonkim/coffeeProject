@@ -19,13 +19,16 @@ public class GarbageController {
 	@Autowired 
 	GarbageRepository garbageDao;
 
+	
 	@RequestMapping(value = "/getGarbageData", method = RequestMethod.GET)
 	public List<Garbage> getGarbageData() {
 		List<Garbage> garbageList = (List<Garbage>) garbageDao.findAll();
 		return garbageList;
 	}
 	
-	@PostMapping("/addGarbage")     //coffee삭제시 garbage테이블에 이름, 총판매액, 총판매량 저장하기
+	
+	 //coffee삭제시 garbage테이블에 이름, 총판매액, 총판매량 저장하기
+	@PostMapping("/addGarbage")    
 	public void addGarbage(@RequestBody Map<String, String> params) {
 		String name = params.get("name");
 		String tot_sales_num = params.get("tot_sales_num");

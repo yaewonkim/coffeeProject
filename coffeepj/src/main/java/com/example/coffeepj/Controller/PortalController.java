@@ -37,6 +37,5 @@ public class PortalController {  //페이지로 연결
 			return "test";
 		}
 			
-		
-		}
+}
 		

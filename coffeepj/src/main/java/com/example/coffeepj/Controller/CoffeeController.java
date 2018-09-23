@@ -22,7 +22,7 @@ import com.example.coffeepj.VO.Coffee;
 @RestController
 public class CoffeeController {
 
-	@Autowired   // 알아서 객체 생성
+	@Autowired  
 	CoffeeRepository coffeeDao;
     
 	@RequestMapping(value = "/getdata", method = RequestMethod.GET)
@@ -31,8 +31,9 @@ public class CoffeeController {
 		return coffeeList;
 	}
 
-
-	@PostMapping("/add")     // 새로운 음료등록
+	
+	// 새로운 음료등록
+	@PostMapping("/add")     
 	public Coffee insertCoffee(@RequestBody Map<String, String> params) {
 		String name = params.get("name");
 		String price = params.get("price");
@@ -41,25 +42,33 @@ public class CoffeeController {
 		coffeeDao.save(coffee);
 		return coffee;
 	}
+	
 
-	@GetMapping("/detail/{id}/getdata")    // detail화면 상세정보조회
+	// detail화면 상세정보조회
+	@GetMapping("/detail/{id}/getdata")    
 	public Coffee getCoffeeDetail(@PathVariable String id) {
 		Coffee coffee = coffeeDao.findById(Integer.valueOf(id));
 		return coffee;
 	}
 
-	@PostMapping("/detail/{id}/delCoffee")   // 음료 삭제
+	
+	// 음료 삭제
+	@PostMapping("/detail/{id}/delCoffee")  
 	public void delCoffee(@PathVariable String id) {
 		coffeeDao.delete(coffeeDao.findById(Integer.valueOf(id)));
 		return;
 	}
 	
-	@GetMapping("/detail/mod/{id}/getdata")    // 수정화면 정보띄우기
+	
+	// modify화면 Coffee정보 가져오기
+	@GetMapping("/detail/mod/{id}/getdata")    
 	public Coffee getCoffeeDetail2(@PathVariable String id) {
 		Coffee coffee = coffeeDao.findById(Integer.valueOf(id));
 		return coffee;
 	}
-
+	
+	
+	// 음료 수정
 	@PostMapping("/detail/mod/confirm")  
 	public Coffee editDataConfirm(@RequestBody Map<String, String> params) {
 		String name = params.get("name");
@@ -86,7 +95,5 @@ public class CoffeeController {
 		coffeeDao.save(coffee);  
 		return coffee;
 	}
-	
-
 	
 }

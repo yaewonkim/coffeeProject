@@ -2,6 +2,7 @@ package com.example.coffeepj.Controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,26 +17,25 @@ import com.example.coffeepj.VO.Coffee;
 
 @CrossOrigin(origins = "*")
 @Controller
-public class ShopController {
+public class ShopController {   
 
 	@Autowired
-	// 알아서 객체 생성
 	CoffeeRepository coffeeDao;
 
-	// getCoffeeList , 파라미터는 없고 전체 List<Coffee>보내기
+	
 	@CrossOrigin("*")
 	@RequestMapping(value = "/getCoffeeList", method = RequestMethod.GET)
-	public @ResponseBody
+	public @ResponseBody 
 	List<Coffee> getCoffeeList() {
 		System.out.println("CORS1들어옴");
 		List<Coffee> coffeeList = (List<Coffee>) coffeeDao.findAll();
 		return coffeeList;
 	}
 
-	// List<int>로 받고 List<Coffee>로 내보내기, "/getCoffeeDetail"
+	
 	@CrossOrigin("*")
 	@RequestMapping(value = "/getCoffeeDetail/{list}", method = RequestMethod.GET)
-	public @ResponseBody
+	public @ResponseBody 
 	List<Coffee> getCoffeeDetail(@PathVariable String list) {
 		System.out.println("CORS2들어옴");
 		System.out.println("들어온 리스트" + list); 
@@ -45,6 +45,20 @@ public class ShopController {
 			coffee_list.add(coffeeDao.findById(Integer.parseInt(aa[i])));
 		}
 		return coffee_list;
+	}
+	
+	@CrossOrigin("*")
+	@RequestMapping(value = "/coffeeSold", method = RequestMethod.GET)
+	public @ResponseBody
+	void postCoffeeSold(@RequestBody Map<String, String> params) {
+		String coffee_id = params.get("cno");
+		String num = params.get("num");
+		System.out.println(coffee_id+"번 커피 "+num+"개 팔렸음");
+		Coffee coffee = coffeeDao.findById(coffee_id);
+		coffee.setSalesnum(coffee.getSalesnum + Integer.parseInt(num));
+		coffee.setStock(coffee.getStock - Integer.parseInt(num));
+		coffeeDao.save(coffee);
+		return;
 	}
 
 }
